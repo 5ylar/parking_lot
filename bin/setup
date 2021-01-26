@@ -5,6 +5,6 @@
 #
 # After this is run, bin/parking_lot
 # should Just Work.
-
-go build -o ${pwd}/parking_lot
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+go build -o ${DIR}/parking_lot
 chmod +x ${pwd}/parking_lot
