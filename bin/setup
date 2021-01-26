@@ -7,4 +7,4 @@
 # should Just Work.
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 go build -o ${DIR}/parking_lot
-chmod +x ${pwd}/parking_lot
+chmod +x ${DIR}/parking_lot
