@@ -37,7 +37,6 @@ func (r *parkingRepository) Park(regisNo string, colour string) (uint16, error) 
 	}
 
 	emptyParkingLotIndex := getEmptyParkingLotsIndex(state.ParkingLot.Slots)
-
 	slot := &state.ParkingLot.Slots[emptyParkingLotIndex]
 	slot.Car = &parking.Car{
 		RegisNo: regisNo,
@@ -80,16 +79,19 @@ func (r *parkingRepository) List(regisNo string, colour string) ([]parking.Slot,
 			car := *slot.Car
 			isMatched := false
 
-			if regisNo != "" {
-				if car.RegisNo == regisNo {
+			if regisNo != "" && colour != "" {
+				if car.RegisNo == regisNo && car.Colour == colour {
 					isMatched = true
 				}
-			}
-			if colour != "" {
-				if car.Colour == colour {
-					isMatched = true
-				} else {
-					isMatched = false
+			} else {
+				if regisNo != "" {
+					if car.RegisNo == regisNo {
+						isMatched = true
+					}
+				} else if colour != "" {
+					if car.Colour == colour {
+						isMatched = true
+					}
 				}
 			}
 
