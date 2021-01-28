@@ -6,16 +6,22 @@
 ```
 
 ### To use
-1. Passing input from file
+There are 2 options to use
+- Passing input from file
 ```sh
 ./bin/parking_lot "file.txt"
 ```
-2. Enter input with interactive shell
+- Enter input with interactive shell
 ```sh
 ./bin/parking_lot
 ```
 
-### To running test
+### To run unit test
+```sh
+go test ./... -v
+```
+
+### To run integration test
 ```sh
 ./bin/run_functional_tests
 ```
