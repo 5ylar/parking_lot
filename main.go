@@ -11,9 +11,9 @@ import (
 )
 
 func main() {
-	parkingRepo := parkingRepository.NewParkingRepository()
-	parkingUsecase := parkingUsecase.NewParkingUsecase(parkingRepo)
-	_parkingController := parkingController.NewParkingController(parkingUsecase)
+	// parkingRepo := parkingRepository.NewParkingRepository()
+	// parkingUsecase := parkingUsecase.NewParkingUsecase(parkingRepo)
+	// _parkingController := parkingController.NewParkingController(parkingUsecase)
 
 	args := os.Args[1:]
 	if len(args) > 0 {
@@ -26,13 +26,14 @@ func main() {
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
 			command := scanner.Text()
-			matched, err := _parkingController.ProcessCommand(command)
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			if matched {
-				continue
-			}
+			processCommand(command)
+			// matched, err := _parkingController.ProcessCommand(command)
+			// if err != nil {
+			// 	fmt.Println(err.Error())
+			// }
+			// if matched {
+			// 	continue
+			// }
 			/* Can use other controllers */
 		}
 
@@ -47,14 +48,32 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			matched, err := _parkingController.ProcessCommand(command)
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			if matched {
-				continue
-			}
+			processCommand(command)
+			// matched, err := _parkingController.ProcessCommand(command)
+			// if err != nil {
+			// 	fmt.Println(err.Error())
+			// }
+			// if matched {
+			// 	continue
+			// }
 			/* Can use other controllers */
 		}
 	}
+}
+
+func processCommand(command string) {
+	parkingRepo := parkingRepository.NewParkingRepository()
+	parkingUsecase := parkingUsecase.NewParkingUsecase(parkingRepo)
+	_parkingController := parkingController.NewParkingController(parkingUsecase)
+
+	var matched bool
+	var err error
+	matched, err = _parkingController.ProcessCommand(command)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	if matched {
+		return
+	}
+	/* Can use other controllers */
 }

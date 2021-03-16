@@ -36,7 +36,10 @@ func (r *parkingRepository) Park(regisNo string, colour string) (uint16, error) 
 		return 0, errors.New("Sorry, parking lot is full")
 	}
 
-	emptyParkingLotIndex := getEmptyParkingLotsIndex(state.ParkingLot.Slots)
+	emptyParkingLotIndex, found := getEmptyParkingLotsIndex(state.ParkingLot.Slots)
+	if !found {
+		return 0, errors.New("Not found")
+	}
 	slot := &state.ParkingLot.Slots[emptyParkingLotIndex]
 	slot.Car = &parking.Car{
 		RegisNo: regisNo,
@@ -111,12 +114,12 @@ func (r *parkingRepository) List(regisNo string, colour string) ([]parking.Slot,
 	return state.ParkingLot.Slots, nil
 }
 
-func getEmptyParkingLotsIndex(slots []parking.Slot) int16 {
+func getEmptyParkingLotsIndex(slots []parking.Slot) (index int16, found bool) {
 	for i := int16(0); i < int16(len(slots)); i++ {
 		if slots[i].IsEmpty {
-			return i
+			return i, true
 		}
 	}
 
-	return -1
+	return 0, false
 }
